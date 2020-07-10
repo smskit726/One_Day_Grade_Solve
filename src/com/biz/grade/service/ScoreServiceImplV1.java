@@ -275,7 +275,7 @@ public class ScoreServiceImplV1 implements ScoreService {
 			System.out.printf("%5.2f\t|",avg);
 			avgAndAvg += avg;
 		}
-		System.out.printf("\t%5.2f\t|\n",(float)avgAndAvg / totalSum.length);
+		System.out.printf("\t%5.2f\t|\n",(float)avgAndAvg / scoreList.size());
 
 		System.out.println(Lines.dLine);
 
