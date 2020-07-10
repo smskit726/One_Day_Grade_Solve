@@ -27,36 +27,34 @@ public class StudentServiceImplV1 implements StudentService {
 		fileName = "src/com/biz/grade/exec/data/student.txt";
 	}
 
-	
 	// studentList를 외부에서 가져다 사용할 수 있도록 통로를 설정
-	public List<StudentVO> getStudentList(){
+	public List<StudentVO> getStudentList() {
 		return studentList;
 	}
-	
+
 	public StudentVO getStudent(String st_num) {
-		
+
 		// 1. studentVO를 null로 clear, null값을 studentVO에 할당
 		StudentVO studentVO = null;
-		
+
 		// 2. studentList를 (순서대로) 뒤지면서
-		for(StudentVO stVO : studentList) {
-			
+		for (StudentVO stVO : studentList) {
+
 			// 3. 매개변수로 받은 st_num가 학생 정보에서 나타나는지 검사
 			// 4. 만약 있으면 해당하는 학생정보를 studentVO에 복사하고
 			// 5. 반복문을 종료
-			if(stVO.getNum().equals(st_num)) {
+			if (stVO.getNum().equals(st_num)) {
 				studentVO = stVO;
 				break;
 			}
 			// 6. 만약 studentList에서 해당학번을 못찾으면 반복문은 끝까지 진행할 것이다.
 		}
-		
+
 		// 7. 만약 중간에 if, break를 만나도 for문이 중단된 상태라면 studentVO에는 stVO가 담겨있을 것이고
 		// 8. for 반복문이 끝까지 진행된 상태라면 studentV에는 null값이 담겨 있을 것이다.
 		return studentVO;
 	}
 
-	
 	@Override
 	public void loadStudent() {
 
@@ -130,65 +128,65 @@ public class StudentServiceImplV1 implements StudentService {
 
 		// 00001 형식으로 만들기
 		st_num = String.format("%05d", intNum);
-		studentVO.setNum(st_num);
 
 		for (StudentVO sVO : studentList) {
 			if (sVO.getNum().equals(st_num)) {
 				System.out.println(st_num + " 학생정보가 이미 등록 되어있습니다");
 				return true;
 			}
-
-			System.out.print("이름 (종료 : END) >> ");
-			String st_name = scan.nextLine();
-			if (st_name.equals("END")) {
-				return false;
-			}
-			studentVO.setName(st_name);
-
-			System.out.print("학과 (종료 : END) >> ");
-			String st_dept = scan.nextLine();
-			if (st_dept.equals("END")) {
-				return false;
-			}
-			studentVO.setDept(st_dept);
-
-			System.out.print("학년 (종료 : END)  >> ");
-
-			String st_grade = scan.nextLine();
-			if (st_grade.equals("END")) {
-				return false;
-			}
-			int intGrade = 0;
-			try {
-				intGrade = Integer.valueOf(st_grade);
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("학년은 숫자반 가능합니다.");
-				System.out.println("입력한 문자열 : " + st_grade);
-				return true;
-			}
-
-			if (intGrade < 1 || intGrade > 4) {
-				System.out.println("학번은 1 ~ 4 까지만 가능합니다.");
-				System.out.println("다시 입력해주세요 :( ");
-				return true;
-			}
-			studentVO.setGrade(intGrade);
-
-			System.out.print("전화번호 : 010-0000-0000 형식으로 입력. " + "(종료 : END) >> ");
-			String st_tel = scan.nextLine();
-			if (st_tel.equals("END")) {
-				return false;
-			}
-			studentVO.setTel(st_tel);
-
-			// list에 추가하기
-			studentList.add(studentVO);
-
-			// file에 저장하기
-			this.saveStudent();
-
 		}
+		studentVO.setNum(st_num);
+
+		System.out.print("이름 (종료 : END) >> ");
+		String st_name = scan.nextLine();
+		if (st_name.equals("END")) {
+			return false;
+		}
+		studentVO.setName(st_name);
+
+		System.out.print("학과 (종료 : END) >> ");
+		String st_dept = scan.nextLine();
+		if (st_dept.equals("END")) {
+			return false;
+		}
+		studentVO.setDept(st_dept);
+
+		System.out.print("학년 (종료 : END)  >> ");
+
+		String st_grade = scan.nextLine();
+		if (st_grade.equals("END")) {
+			return false;
+		}
+		int intGrade = 0;
+		try {
+			intGrade = Integer.valueOf(st_grade);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("학년은 숫자반 가능합니다.");
+			System.out.println("입력한 문자열 : " + st_grade);
+			return true;
+		}
+
+		if (intGrade < 1 || intGrade > 4) {
+			System.out.println("학번은 1 ~ 4 까지만 가능합니다.");
+			System.out.println("다시 입력해주세요 :( ");
+			return true;
+		}
+		studentVO.setGrade(intGrade);
+
+		System.out.print("전화번호 : 010-0000-0000 형식으로 입력. " + "(종료 : END) >> ");
+		String st_tel = scan.nextLine();
+		if (st_tel.equals("END")) {
+			return false;
+		}
+		studentVO.setTel(st_tel);
+
+		// list에 추가하기
+		studentList.add(studentVO);
+
+		// file에 저장하기
+		this.saveStudent();
+
 		return true;
 
 	}
